@@ -16,35 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `KvmHostAccess`
+-- Table structure for table `User`
 --
 
-DROP TABLE IF EXISTS `KvmHostAccess`;
+DROP TABLE IF EXISTS `User`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `KvmHostAccess` (
+CREATE TABLE `User` (
   `i` int(11) NOT NULL AUTO_INCREMENT,
-  `toKvmHost` int(11) DEFAULT NULL,
-  `toUser` int(11) DEFAULT NULL,
-  `FromIp` varchar(45) DEFAULT NULL,
+  `Name` varchar(45) DEFAULT NULL,
   `Comment` varchar(255) DEFAULT NULL,
   `LastUpdate` datetime DEFAULT NULL,
-  PRIMARY KEY (`i`),
-  KEY `LinkToKvmHost_idx` (`toKvmHost`),
-  KEY `LinkToUser_idx` (`toUser`),
-  CONSTRAINT `LinkToKvmHost` FOREIGN KEY (`toKvmHost`) REFERENCES `KvmHost` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `LinkToUser3` FOREIGN KEY (`toUser`) REFERENCES `User` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='cat ~/.ssh/known_hosts\ncat ~/.ssh/authorized_keys\nufw status verbose';
+  PRIMARY KEY (`i`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `KvmHostAccess`
+-- Dumping data for table `User`
 --
 
-LOCK TABLES `KvmHostAccess` WRITE;
-/*!40000 ALTER TABLE `KvmHostAccess` DISABLE KEYS */;
-INSERT INTO `KvmHostAccess` VALUES (1,1,1,'91.193.172.136','Home','2021-11-26 09:40:41'),(2,1,1,'62.152.54.125','Informer','2021-11-26 09:40:41');
-/*!40000 ALTER TABLE `KvmHostAccess` ENABLE KEYS */;
+LOCK TABLES `User` WRITE;
+/*!40000 ALTER TABLE `User` DISABLE KEYS */;
+INSERT INTO `User` VALUES (1,'Admin',NULL,'2021-11-29 15:12:28'),(2,'XSN-Turkey',NULL,'2021-11-29 15:12:28'),(3,'Lux',NULL,'2021-11-29 15:12:28');
+/*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-06  0:03:05
+-- Dump completed on 2021-12-12 23:06:10

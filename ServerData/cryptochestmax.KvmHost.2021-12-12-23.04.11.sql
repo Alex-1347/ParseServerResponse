@@ -16,30 +16,44 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `Docker`
+-- Table structure for table `KvmHost`
 --
 
-DROP TABLE IF EXISTS `Docker`;
+DROP TABLE IF EXISTS `KvmHost`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Docker` (
+CREATE TABLE `KvmHost` (
   `i` int(11) NOT NULL AUTO_INCREMENT,
-  `toDockerHub` int(11) DEFAULT NULL,
+  `ServerName` varchar(45) DEFAULT NULL,
+  `OsVersion` varchar(45) DEFAULT NULL,
+  `KvmVersion` varchar(145) DEFAULT NULL,
+  `UserName` varchar(45) DEFAULT NULL,
+  `Password` blob DEFAULT NULL,
+  `CpuModel` varchar(45) DEFAULT NULL,
+  `CpuCount` int(11) DEFAULT NULL,
+  `CpuSocket` int(11) DEFAULT NULL,
+  `CorePerSocket` int(11) DEFAULT NULL,
+  `ThreadPerSocket` int(11) DEFAULT NULL,
+  `NumaCell` int(11) DEFAULT NULL,
+  `MemorySize` bigint(20) DEFAULT NULL,
+  `MainServerIP` varchar(45) DEFAULT NULL,
+  `Location` varchar(450) DEFAULT NULL,
+  `MonthPrice` decimal(10,0) DEFAULT NULL,
   `Comment` varchar(255) DEFAULT NULL,
   `LastUpdate` datetime DEFAULT NULL,
   PRIMARY KEY (`i`),
-  KEY `LinkToDickerHub_idx` (`toDockerHub`),
-  CONSTRAINT `LinkToDickerHub` FOREIGN KEY (`toDockerHub`) REFERENCES `DockerHub` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  UNIQUE KEY `i_UNIQUE` (`i`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='virsh nodeinfo';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Docker`
+-- Dumping data for table `KvmHost`
 --
 
-LOCK TABLES `Docker` WRITE;
-/*!40000 ALTER TABLE `Docker` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Docker` ENABLE KEYS */;
+LOCK TABLES `KvmHost` WRITE;
+/*!40000 ALTER TABLE `KvmHost` DISABLE KEYS */;
+INSERT INTO `KvmHost` VALUES (1,'New256','Ubuntu 20.10','QEMU emulator version 5.0.0 (Debian 1:5.0-5ubuntu9.6)','root','—¢4ßòô·rmÅ]H=ûó','x86_64',12,1,6,2,1,263827608,'144.XX.XX.107','Hetzner,FSN1-DC11,SB73 #1357993',131,NULL,'2021-11-26 09:32:47');
+/*!40000 ALTER TABLE `KvmHost` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +65,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-06  0:01:53
+-- Dump completed on 2021-12-12 23:04:17

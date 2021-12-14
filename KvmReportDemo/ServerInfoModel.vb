@@ -46,6 +46,7 @@ Partial Module Program
         Property MemorySize As Long
         Property MainServerIP As String
         Property Location As String
+        Property MonthPrice As Decimal
         Property Comment As String
         Property LastUpdate As DateTime
     End Class
@@ -148,6 +149,7 @@ Partial Module Program
         Property i As Integer
         Property toKvmPool As Nullable(Of Integer)
         Property toDevicePartition As Nullable(Of Integer)
+        Property toVm As Nullable(Of Integer)
         Property Name As String
         Property Path As String
         Property Type As String
@@ -165,7 +167,6 @@ Partial Module Program
     Public Class AdmVM
         Property i As Integer
         Property toKvmHost As Integer
-        Property ToKvmVolume As Integer
         Property ToVmNetwork As Integer
         Property toUser As Integer
         Property UUID As String
@@ -183,24 +184,34 @@ Partial Module Program
         Property Comment As String
         Property LastUpdate As DateTime
     End Class
-    Public Class AdmVMNetwork
+
+    Public Class AdmKvmBridgePort
         Property i As Integer
         Property toKvmBridge As Integer
+        Property BridgePort As Nullable(Of Integer)
         Property Name As String
+        Property BridgePortMac As String
+        Property Comment As String
+        Property LastUpdate As DateTime
+    End Class
+
+    Public Class AdmVmIp
+        Property i As Integer
+        Property toKvmBridgePort As Integer
+        Property toVm As Integer
         Property Ip As String
-        Property MAC As String
         Property Comment As String
         Property LastUpdate As DateTime
     End Class
 
     Function ReadAdmKvmBridgeList(ByRef CN As MySqlConnection) As List(Of AdmKvmBridge)
-        Dim AdmKvmBridgetList As New List(Of AdmKvmBridge)
+        Dim AdmKvmBridgeList As New List(Of AdmKvmBridge)
         Dim CMD1 As MySqlCommand
         Try
             CMD1 = New MySqlCommand($"select * from `cryptochestmax`.`KvmBridge`;", CN)
             Dim RDR1 As MySqlDataReader = CMD1.ExecuteReader
             While RDR1.Read
-                AdmKvmBridgetList.Add(New AdmKvmBridge With {
+                AdmKvmBridgeList.Add(New AdmKvmBridge With {
                             .i = CInt(RDR1("i")),
                             .toKvmNetwork = If(IsDBNull(RDR1("toKvmNetwork")), Nothing, RDR1("toKvmNetwork")),
                             .toKvmVlanSwitch = If(IsDBNull(RDR1("toKvmVlanSwitch")), Nothing, RDR1("toKvmVlanSwitch")),
@@ -218,7 +229,7 @@ Partial Module Program
             CN.Close()
             ReOpenMySQL(CN)
         End Try
-        Return AdmKvmBridgetList
+        Return AdmKvmBridgeList
     End Function
     Function ReadAdmKvmDevicePartitionList(ByRef CN As MySqlConnection) As List(Of AdmKvmDevicePartition)
         Dim AdmKvmDevicePartitionList As New List(Of AdmKvmDevicePartition)
@@ -276,6 +287,7 @@ Partial Module Program
                             .NumaCell = RDR1("NumaCell"),
                             .MemorySize = RDR1("MemorySize"),
                             .MainServerIP = RDR1("MainServerIP"),
+                            .MonthPrice = RDR1("MonthPrice"),
                             .Location = RDR1("Location"),
                             .Comment = If(IsDBNull(RDR1("Comment")), "", RDR1("Comment")),
                             .LastUpdate = CDate(RDR1("LastUpdate"))
@@ -523,6 +535,7 @@ Partial Module Program
                             .i = CInt(RDR1("i")),
                             .toKvmPool = If(IsDBNull(RDR1("toKvmPool")), Nothing, RDR1("toKvmPool")),
                             .toDevicePartition = If(IsDBNull(RDR1("toDevicePartition")), Nothing, RDR1("toDevicePartition")),
+                            .toVm = If(IsDBNull(RDR1("toVm")), Nothing, RDR1("toVm")),
                             .Name = RDR1("Name"),
                             .Path = RDR1("Path"),
                             .Type = RDR1("Type"),
@@ -572,7 +585,6 @@ Partial Module Program
                 AdmVMList.Add(New AdmVM With {
                             .i = CInt(RDR1("i")),
                             .toKvmHost = RDR1("toKvmHost"),
-                            .ToKvmVolume = RDR1("ToKvmVolume"),
                             .ToVmNetwork = RDR1("ToVmNetwork"),
                             .toUser = RDR1("toUser"),
                             .UUID = RDR1("UUID"),
@@ -599,19 +611,19 @@ Partial Module Program
         End Try
         Return AdmVMList
     End Function
-    Function ReadAdmVMNetworkList(ByRef CN As MySqlConnection) As List(Of AdmVMNetwork)
-        Dim AdmVMNetworkList As New List(Of AdmVMNetwork)
+    Function ReadAdmKvmBridgePortList(ByRef CN As MySqlConnection) As List(Of AdmKvmBridgePort)
+        Dim AdmKvmBridgePortList As New List(Of AdmKvmBridgePort)
         Dim CMD1 As MySqlCommand
         Try
-            CMD1 = New MySqlCommand($"select * from `cryptochestmax`.`VMNetwork`;", CN)
+            CMD1 = New MySqlCommand($"select * from `cryptochestmax`.`KvmBridgePort`;", CN)
             Dim RDR1 As MySqlDataReader = CMD1.ExecuteReader
             While RDR1.Read
-                AdmVMNetworkList.Add(New AdmVMNetwork With {
+                AdmKvmBridgePortList.Add(New AdmKvmBridgePort With {
                             .i = CInt(RDR1("i")),
                             .toKvmBridge = RDR1("toKvmBridge"),
+                            .BridgePort = If(IsDBNull(RDR1("BridgePort")), Nothing, RDR1("BridgePort")),
                             .Name = RDR1("Name"),
-                            .Ip = RDR1("Ip"),
-                            .MAC = RDR1("MAC"),
+                            .BridgePortMac = RDR1("BridgePortMac"),
                             .Comment = If(IsDBNull(RDR1("Comment")), "", RDR1("Comment")),
                             .LastUpdate = CDate(RDR1("LastUpdate"))
                                       })
@@ -622,6 +634,31 @@ Partial Module Program
             CN.Close()
             ReOpenMySQL(CN)
         End Try
-        Return AdmVMNetworkList
+        Return AdmKvmBridgePortList
+    End Function
+
+    Function ReadAdmVmIpList(ByRef CN As MySqlConnection) As List(Of AdmVmIp)
+        Dim AdmVmIpList As New List(Of AdmVmIp)
+        Dim CMD1 As MySqlCommand
+        Try
+            CMD1 = New MySqlCommand($"select * from `cryptochestmax`.`VmIp`;", CN)
+            Dim RDR1 As MySqlDataReader = CMD1.ExecuteReader
+            While RDR1.Read
+                AdmVmIpList.Add(New AdmVmIp With {
+                            .i = CInt(RDR1("i")),
+                            .toKvmBridgePort = RDR1("toKvmBridgePort"),
+                            .toVm = RDR1("toVm"),
+                            .Ip = RDR1("Ip"),
+                            .Comment = If(IsDBNull(RDR1("Comment")), "", RDR1("Comment")),
+                            .LastUpdate = CDate(RDR1("LastUpdate"))
+                                      })
+            End While
+            RDR1.Close()
+        Catch ex As Exception
+            Console.WriteLine(ex.Message & CMD1.CommandText)
+            CN.Close()
+            ReOpenMySQL(CN)
+        End Try
+        Return AdmVmIpList
     End Function
 End Module

@@ -16,43 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `KvmVlanSwitch`
+-- Table structure for table `KvmLVMmember`
 --
 
-DROP TABLE IF EXISTS `KvmVlanSwitch`;
+DROP TABLE IF EXISTS `KvmLVMmember`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `KvmVlanSwitch` (
+CREATE TABLE `KvmLVMmember` (
   `i` int(11) NOT NULL AUTO_INCREMENT,
-  `toKvmHost` int(11) DEFAULT NULL,
-  `toNetworkInterface` int(11) DEFAULT NULL,
-  `id` int(11) DEFAULT NULL,
-  `VlanName` varchar(45) DEFAULT NULL,
-  `VirtSwitch` varchar(45) DEFAULT NULL,
-  `SwitchMac` varchar(45) DEFAULT NULL,
-  `FromIp` varchar(45) DEFAULT NULL,
-  `ToIp` varchar(45) DEFAULT NULL,
-  `IpBroadcast` varchar(45) DEFAULT NULL,
-  `IpNetmask` varchar(45) DEFAULT NULL,
-  `IpGateway` varchar(45) DEFAULT NULL,
+  `toKvmLVM` int(11) DEFAULT NULL,
+  `DeviceName` varchar(45) DEFAULT NULL,
+  `UUID` varchar(45) DEFAULT NULL,
+  `Type` varchar(45) DEFAULT NULL,
+  `BlockSize` varchar(45) DEFAULT NULL,
   `Comment` varchar(255) DEFAULT NULL,
   `LastUpdate` datetime DEFAULT NULL,
   PRIMARY KEY (`i`),
-  KEY `LinkToKvmHost_idx` (`toKvmHost`),
-  KEY `LinkToNetwork1_idx` (`toNetworkInterface`),
-  CONSTRAINT `LinkToKvmHost1` FOREIGN KEY (`toKvmHost`) REFERENCES `KvmHost` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `LinkToNetwork1` FOREIGN KEY (`toNetworkInterface`) REFERENCES `KvmNetworkInterface` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='brctl show\nip a\nroute -n';
+  KEY `LinkToKvmLVM_idx` (`toKvmLVM`),
+  CONSTRAINT `LinkToKvmLVM1` FOREIGN KEY (`toKvmLVM`) REFERENCES `KvmLVM` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='blkid,lvdisplay -m';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `KvmVlanSwitch`
+-- Dumping data for table `KvmLVMmember`
 --
 
-LOCK TABLES `KvmVlanSwitch` WRITE;
-/*!40000 ALTER TABLE `KvmVlanSwitch` DISABLE KEYS */;
-INSERT INTO `KvmVlanSwitch` VALUES (1,1,1,4002,'vlan.4002','vSwitch #17904','f2:0b:a4:d1:20:01','188.XX.XX.224','188.XX.XX.239','188.XX.XX.239',' 255.255.255.240','188.XX.XX.225',NULL,'2021-11-26 09:36:25'),(2,1,1,4005,'vlan.4005','vSwitch #18841 ','f2:0b:a4:d1:20:01','157.XX.XX.64','157.XX.XX.95','157.XX.XX.95',' 255.255.255.240','157.XX.XX.65',NULL,'2021-11-26 09:36:52');
-/*!40000 ALTER TABLE `KvmVlanSwitch` ENABLE KEYS */;
+LOCK TABLES `KvmLVMmember` WRITE;
+/*!40000 ALTER TABLE `KvmLVMmember` DISABLE KEYS */;
+INSERT INTO `KvmLVMmember` VALUES (1,1,'/dev/mapper/vg0-root','1e365d3b-c2f9-4dd0-a1fc-50874c94391f','Linux ext4','4096',NULL,'2021-11-26 09:32:47'),(2,1,'/dev/mapper/vg0-swap','cd3f191-5c74-499b-9402-02b72500f808','swap',NULL,NULL,'2021-11-26 09:32:47');
+/*!40000 ALTER TABLE `KvmLVMmember` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -64,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-06  0:05:12
+-- Dump completed on 2021-12-12 23:04:45

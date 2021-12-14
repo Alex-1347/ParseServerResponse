@@ -16,43 +16,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `KvmHost`
+-- Table structure for table `KvmLVM`
 --
 
-DROP TABLE IF EXISTS `KvmHost`;
+DROP TABLE IF EXISTS `KvmLVM`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `KvmHost` (
+CREATE TABLE `KvmLVM` (
   `i` int(11) NOT NULL AUTO_INCREMENT,
-  `ServerName` varchar(45) DEFAULT NULL,
-  `OsVersion` varchar(45) DEFAULT NULL,
-  `KvmVersion` varchar(145) DEFAULT NULL,
-  `UserName` varchar(45) DEFAULT NULL,
-  `Password` blob DEFAULT NULL,
-  `CpuModel` varchar(45) DEFAULT NULL,
-  `CpuCount` int(11) DEFAULT NULL,
-  `CpuSocket` int(11) DEFAULT NULL,
-  `CorePerSocket` int(11) DEFAULT NULL,
-  `ThreadPerSocket` int(11) DEFAULT NULL,
-  `NumaCell` int(11) DEFAULT NULL,
-  `MemorySize` bigint(20) DEFAULT NULL,
-  `MainServerIP` varchar(45) DEFAULT NULL,
-  `Location` varchar(450) DEFAULT NULL,
+  `ToKvmStorage` int(11) DEFAULT NULL,
+  `PartName` varchar(45) DEFAULT NULL,
+  `LvmName` varchar(45) DEFAULT NULL,
+  `Fmt` varchar(45) DEFAULT NULL,
+  `Size` varchar(45) DEFAULT NULL,
+  `Free` varchar(45) DEFAULT NULL,
   `Comment` varchar(255) DEFAULT NULL,
   `LastUpdate` datetime DEFAULT NULL,
   PRIMARY KEY (`i`),
-  UNIQUE KEY `i_UNIQUE` (`i`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='virsh nodeinfo';
+  KEY `LinkToKvmStorage3_idx` (`ToKvmStorage`),
+  CONSTRAINT `LinkToKvmStorage3` FOREIGN KEY (`ToKvmStorage`) REFERENCES `KvmStorageDevice` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='pvs';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `KvmHost`
+-- Dumping data for table `KvmLVM`
 --
 
-LOCK TABLES `KvmHost` WRITE;
-/*!40000 ALTER TABLE `KvmHost` DISABLE KEYS */;
-INSERT INTO `KvmHost` VALUES (1,'New256','Ubuntu 20.10','QEMU emulator version 5.0.0 (Debian 1:5.0-5ubuntu9.6)','root','—¢4ßòô·rmÅ]H=ûó','x86_64',12,1,6,2,1,263827608,'144.XX.XX.107','Hetzner,FSN1-DC11,SB73 #XXXXXXX',NULL,'2021-11-26 09:32:47');
-/*!40000 ALTER TABLE `KvmHost` ENABLE KEYS */;
+LOCK TABLES `KvmLVM` WRITE;
+/*!40000 ALTER TABLE `KvmLVM` DISABLE KEYS */;
+INSERT INTO `KvmLVM` VALUES (1,1,'/dev/sda2','vg0','lvm2','446.62g','1.23g',NULL,'2021-11-29 15:12:28');
+/*!40000 ALTER TABLE `KvmLVM` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -64,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-05 23:56:28
+-- Dump completed on 2021-12-12 23:04:35

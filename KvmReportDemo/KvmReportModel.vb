@@ -47,19 +47,24 @@ Partial Module Program
     Public Class KvmNetworkReport
         Inherits AdmKvmBridge
         <JsonProperty(Order:=100)>
-        Property NetworkInterface As List(Of KvmNetworkInterfaceReport)
-        <JsonProperty(Order:=101)>
-        Property VlanSwitch As List(Of KvmVlanSwitchReport)
+        Property NetworkInterface As List(Of AdmKvmNetworkInterface)
+
         <JsonProperty(Order:=102)>
-        Property VmNetwork As List(Of AdmVMNetwork)
+        Property Bridge As KvmBridgeReport
     End Class
 
-    Public Class KvmNetworkInterfaceReport
-        Inherits AdmKvmNetworkInterface
+    Public Class KvmBridgeReport
+        Property VlanSwitch As List(Of AdmKvmVlanSwitch)
+        <JsonProperty(Order:=100)>
+        Property Bridge As AdmKvmBridge
+        <JsonProperty(Order:=101)>
+        Property Port As List(Of KvmBridgePortReport)
     End Class
 
-    Public Class KvmVlanSwitchReport
-        Inherits AdmKvmVlanSwitch
+    Public Class KvmBridgePortReport
+        Inherits AdmKvmBridgePort
+        <JsonProperty(Order:=100)>
+        Property IP As List(Of String)
     End Class
 
     Public Class KvmPoolReport
@@ -78,7 +83,7 @@ Partial Module Program
         <JsonProperty(Order:=101)>
         Property VmNetworkName As List(Of String)      'ref to VmNetwork from KvmNetworkReport
         <JsonProperty(Order:=102)>
-        Property StorageDeviceName As List(Of String)  'ref to Volume from KvmPoolReport
+        Property StorageDeviceName As List(Of Tuple(Of String, String))
         <JsonProperty(Order:=103)>
         Property UserName As String                    'ref to User KvmHostAccessReport
     End Class

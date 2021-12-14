@@ -1,0 +1,65 @@
+-- MariaDB dump 10.19  Distrib 10.5.9-MariaDB, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: cryptochestmax
+-- ------------------------------------------------------
+-- Server version	10.5.9-MariaDB-1:10.5.9+maria~xenial
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `VmIp`
+--
+
+DROP TABLE IF EXISTS `VmIp`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `VmIp` (
+  `i` int(11) NOT NULL AUTO_INCREMENT,
+  `toKvmBridgePort` int(11) DEFAULT NULL,
+  `toVm` int(11) DEFAULT NULL,
+  `Ip` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`i`),
+  KEY `LinkToKvmBridge2_idx` (`toKvmBridgePort`),
+  KEY `LinkToVm2_idx` (`toVm`),
+  KEY `LinkToKvmBridge3_idx` (`toKvmBridgePort`),
+  KEY `LinkToVm3_idx` (`toVm`),
+  KEY `LinkToKvmBridge5_idx` (`toKvmBridgePort`),
+  KEY `LinkToVm5_idx` (`toVm`),
+  KEY `LinkToKvmBridge6_idx` (`toKvmBridgePort`),
+  KEY `LinkToVm6_idx` (`toVm`),
+  KEY `LinkToKvmBridge7_idx` (`toKvmBridgePort`),
+  KEY `LinkToVm7_idx` (`toVm`),
+  CONSTRAINT `LinkToKvmBridge7` FOREIGN KEY (`toKvmBridgePort`) REFERENCES `KvmBridgePort` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `LinkToVm7` FOREIGN KEY (`toVm`) REFERENCES `VM` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COMMENT='arping from-to (inside bridge)';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `VmIp`
+--
+
+LOCK TABLES `VmIp` WRITE;
+/*!40000 ALTER TABLE `VmIp` DISABLE KEYS */;
+INSERT INTO `VmIp` VALUES (1,1,1,'188.XX.XX.226'),(2,2,2,'188.XX.XX.227'),(3,3,3,'188.XX.XX.228'),(4,4,4,'188.XX.XX.229'),(5,5,5,'188.XX.XX.230'),(6,6,6,'188.XX.XX.231'),(7,7,7,'188.XX.XX.232'),(8,8,8,'188.XX.XX.233'),(9,9,9,'188.XX.XX.234'),(10,10,10,'188.XX.XX.235'),(11,11,11,'188.XX.XX.236'),(12,12,12,'188.XX.XX.237'),(13,13,13,'188.XX.XX.238'),(14,14,14,'157.XX.XX.66'),(15,15,15,'157.XX.XX.67'),(16,16,16,'157.XX.XX.68'),(17,17,17,'157.XX.XX.69'),(18,18,18,'157.XX.XX.70'),(19,19,19,'157.XX.XX.71'),(20,20,20,'157.XX.XX.72'),(21,21,21,'157.XX.XX.73'),(22,22,22,'157.XX.XX.74'),(23,23,23,'157.XX.XX.75'),(24,24,24,'157.XX.XX.76'),(25,25,25,'157.XX.XX.77'),(26,26,26,'157.XX.XX.78'),(27,27,27,'157.XX.XX.79'),(28,28,28,'157.XX.XX.80'),(29,29,29,'157.XX.XX.85'),(30,30,30,'157.XX.XX.84'),(31,31,31,'157.XX.XX.82'),(32,32,32,'157.XX.XX.81'),(33,33,33,'157.XX.XX.83'),(34,29,29,'157.XX.XX.86'),(35,29,29,'157.XX.XX.87'),(36,29,29,'157.XX.XX.88'),(37,29,29,'157.XX.XX.89'),(38,29,29,'157.XX.XX.90');
+/*!40000 ALTER TABLE `VmIp` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2021-12-12 23:06:25

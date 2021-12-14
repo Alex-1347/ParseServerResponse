@@ -16,36 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `KvmLVM`
+-- Table structure for table `CoinTemplate`
 --
 
-DROP TABLE IF EXISTS `KvmLVM`;
+DROP TABLE IF EXISTS `CoinTemplate`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `KvmLVM` (
+CREATE TABLE `CoinTemplate` (
   `i` int(11) NOT NULL AUTO_INCREMENT,
-  `ToKvmStorage` int(11) DEFAULT NULL,
-  `PartName` varchar(45) DEFAULT NULL,
-  `LvmName` varchar(45) DEFAULT NULL,
-  `Fmt` varchar(45) DEFAULT NULL,
-  `Size` varchar(45) DEFAULT NULL,
-  `Free` varchar(45) DEFAULT NULL,
+  `toCoin` int(11) DEFAULT NULL,
+  `toDockerRegistry` int(11) DEFAULT NULL,
   `Comment` varchar(255) DEFAULT NULL,
   `LastUpdate` datetime DEFAULT NULL,
   PRIMARY KEY (`i`),
-  KEY `LinkToKvmStorage3_idx` (`ToKvmStorage`),
-  CONSTRAINT `LinkToKvmStorage3` FOREIGN KEY (`ToKvmStorage`) REFERENCES `KvmStorageDevice` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='pvs';
+  KEY `LinkToCoin2_idx` (`toCoin`),
+  KEY `LinkToDockerRegistry_idx` (`toDockerRegistry`),
+  CONSTRAINT `LinkToCoin2` FOREIGN KEY (`toCoin`) REFERENCES `Coin` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `LinkToDockerRegistry` FOREIGN KEY (`toDockerRegistry`) REFERENCES `DockerRegistryVm` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `KvmLVM`
+-- Dumping data for table `CoinTemplate`
 --
 
-LOCK TABLES `KvmLVM` WRITE;
-/*!40000 ALTER TABLE `KvmLVM` DISABLE KEYS */;
-INSERT INTO `KvmLVM` VALUES (1,2,'/dev/sda2','vg0','lvm2','446.62g','1.23g',NULL,'2021-11-29 15:12:28');
-/*!40000 ALTER TABLE `KvmLVM` ENABLE KEYS */;
+LOCK TABLES `CoinTemplate` WRITE;
+/*!40000 ALTER TABLE `CoinTemplate` DISABLE KEYS */;
+/*!40000 ALTER TABLE `CoinTemplate` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -57,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-06  0:03:32
+-- Dump completed on 2021-12-12 23:02:49

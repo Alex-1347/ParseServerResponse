@@ -16,35 +16,38 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `KvmLVMmember`
+-- Table structure for table `KvmBridge`
 --
 
-DROP TABLE IF EXISTS `KvmLVMmember`;
+DROP TABLE IF EXISTS `KvmBridge`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `KvmLVMmember` (
+CREATE TABLE `KvmBridge` (
   `i` int(11) NOT NULL AUTO_INCREMENT,
-  `toKvmLVM` int(11) DEFAULT NULL,
-  `DeviceName` varchar(45) DEFAULT NULL,
-  `UUID` varchar(45) DEFAULT NULL,
-  `Type` varchar(45) DEFAULT NULL,
-  `BlockSize` varchar(45) DEFAULT NULL,
+  `toKvmNetwork` int(11) DEFAULT NULL,
+  `toKvmVlanSwitch` int(11) DEFAULT NULL,
+  `Name` varchar(45) DEFAULT NULL,
+  `Id` varchar(45) DEFAULT NULL,
+  `STP` varchar(45) DEFAULT NULL,
+  `Ip` varchar(45) DEFAULT NULL,
   `Comment` varchar(255) DEFAULT NULL,
   `LastUpdate` datetime DEFAULT NULL,
   PRIMARY KEY (`i`),
-  KEY `LinkToKvmLVM_idx` (`toKvmLVM`),
-  CONSTRAINT `LinkToKvmLVM1` FOREIGN KEY (`toKvmLVM`) REFERENCES `KvmLVM` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='blkid';
+  KEY `LinkToKvmNetwork_idx` (`toKvmNetwork`),
+  KEY `LinkToKvmVlan_idx` (`toKvmVlanSwitch`),
+  CONSTRAINT `LinkToKvmNetwork` FOREIGN KEY (`toKvmNetwork`) REFERENCES `KvmNetworkInterface` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `LinkToKvmVlan` FOREIGN KEY (`toKvmVlanSwitch`) REFERENCES `KvmVlanSwitch` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='brctl\narp -a';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `KvmLVMmember`
+-- Dumping data for table `KvmBridge`
 --
 
-LOCK TABLES `KvmLVMmember` WRITE;
-/*!40000 ALTER TABLE `KvmLVMmember` DISABLE KEYS */;
-INSERT INTO `KvmLVMmember` VALUES (1,1,'/dev/mapper/vg0-root','1e365d3b-c2f9-4dd0-a1fc-50874c94391f','Linux ext4','4096',NULL,'2021-11-26 09:32:47'),(2,1,'/dev/mapper/vg0-swap','cd3f191-5c74-499b-9402-02b72500f808','swap',NULL,NULL,'2021-11-26 09:32:47');
-/*!40000 ALTER TABLE `KvmLVMmember` ENABLE KEYS */;
+LOCK TABLES `KvmBridge` WRITE;
+/*!40000 ALTER TABLE `KvmBridge` DISABLE KEYS */;
+INSERT INTO `KvmBridge` VALUES (1,1,NULL,'virbr0','8000.5254005da0cc','yes','192.168.122.1',NULL,'2021-11-26 09:36:25'),(2,NULL,1,'br1','8000.305a3a75da41','no','188.XX.XX.224',NULL,'2021-11-26 09:36:25'),(3,NULL,2,'br2','8000.305a3a75da41','yes','157.XX.XX.64',NULL,'2021-11-26 09:36:25');
+/*!40000 ALTER TABLE `KvmBridge` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-06  0:03:45
+-- Dump completed on 2021-12-12 23:03:37

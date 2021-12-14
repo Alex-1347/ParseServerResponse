@@ -16,33 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `KvmPoolExtent`
+-- Table structure for table `KvmHostAccess`
 --
 
-DROP TABLE IF EXISTS `KvmPoolExtent`;
+DROP TABLE IF EXISTS `KvmHostAccess`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `KvmPoolExtent` (
+CREATE TABLE `KvmHostAccess` (
   `i` int(11) NOT NULL AUTO_INCREMENT,
-  `toKvmPool` int(11) DEFAULT NULL,
-  `Start` bigint(20) DEFAULT NULL,
-  `End` bigint(20) DEFAULT NULL,
+  `toKvmHost` int(11) DEFAULT NULL,
+  `toUser` int(11) DEFAULT NULL,
+  `FromIp` varchar(45) DEFAULT NULL,
   `Comment` varchar(255) DEFAULT NULL,
   `LastUpdate` datetime DEFAULT NULL,
   PRIMARY KEY (`i`),
-  KEY `LinkToKvmPool2_idx` (`toKvmPool`),
-  CONSTRAINT `LinkToKvmPool2` FOREIGN KEY (`toKvmPool`) REFERENCES `KvmPool` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='virsh pool-dumpxml POOLNAME\n';
+  KEY `LinkToKvmHost_idx` (`toKvmHost`),
+  KEY `LinkToUser_idx` (`toUser`),
+  CONSTRAINT `LinkToKvmHost` FOREIGN KEY (`toKvmHost`) REFERENCES `KvmHost` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `LinkToUser3` FOREIGN KEY (`toUser`) REFERENCES `User` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='cat ~/.ssh/known_hosts\ncat ~/.ssh/authorized_keys\nufw status verbose';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `KvmPoolExtent`
+-- Dumping data for table `KvmHostAccess`
 --
 
-LOCK TABLES `KvmPoolExtent` WRITE;
-/*!40000 ALTER TABLE `KvmPoolExtent` DISABLE KEYS */;
-INSERT INTO `KvmPoolExtent` VALUES (1,2,479962612736,480103964160,NULL,'2021-11-26 09:41:44'),(2,3,479962612736,480103964160,NULL,'2021-11-26 09:41:44'),(3,4,17408,1048576,NULL,'2021-11-26 09:41:44'),(4,4,478889902080,480103964160,NULL,'2021-11-26 09:41:44');
-/*!40000 ALTER TABLE `KvmPoolExtent` ENABLE KEYS */;
+LOCK TABLES `KvmHostAccess` WRITE;
+/*!40000 ALTER TABLE `KvmHostAccess` DISABLE KEYS */;
+INSERT INTO `KvmHostAccess` VALUES (1,1,1,'91.193.172.136','Home','2021-11-26 09:40:41'),(2,1,1,'62.152.54.125','Informer','2021-11-26 09:40:41');
+/*!40000 ALTER TABLE `KvmHostAccess` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-06  0:04:36
+-- Dump completed on 2021-12-12 23:04:27

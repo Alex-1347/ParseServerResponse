@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `DockerHub`
+-- Table structure for table `DockerHubVm`
 --
 
-DROP TABLE IF EXISTS `DockerHub`;
+DROP TABLE IF EXISTS `DockerHubVm`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `DockerHub` (
+CREATE TABLE `DockerHubVm` (
   `i` int(11) NOT NULL AUTO_INCREMENT,
   `ToVM` int(11) DEFAULT NULL,
   `Comment` varchar(255) DEFAULT NULL,
@@ -34,12 +34,12 @@ CREATE TABLE `DockerHub` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `DockerHub`
+-- Dumping data for table `DockerHubVm`
 --
 
-LOCK TABLES `DockerHub` WRITE;
-/*!40000 ALTER TABLE `DockerHub` DISABLE KEYS */;
-/*!40000 ALTER TABLE `DockerHub` ENABLE KEYS */;
+LOCK TABLES `DockerHubVm` WRITE;
+/*!40000 ALTER TABLE `DockerHubVm` DISABLE KEYS */;
+/*!40000 ALTER TABLE `DockerHubVm` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-06  0:02:11
+-- Dump completed on 2021-12-12 23:03:14

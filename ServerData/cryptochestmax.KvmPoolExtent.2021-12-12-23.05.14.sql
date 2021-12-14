@@ -16,37 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `KvmNetworkInterface`
+-- Table structure for table `KvmPoolExtent`
 --
 
-DROP TABLE IF EXISTS `KvmNetworkInterface`;
+DROP TABLE IF EXISTS `KvmPoolExtent`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `KvmNetworkInterface` (
+CREATE TABLE `KvmPoolExtent` (
   `i` int(11) NOT NULL AUTO_INCREMENT,
-  `toKvmHost` int(11) DEFAULT NULL,
-  `Name` varchar(45) DEFAULT NULL,
-  `Ip` varchar(45) DEFAULT NULL,
-  `Gateway` varchar(45) DEFAULT NULL,
-  `Netmask` varchar(45) DEFAULT NULL,
-  `Broadcast` varchar(45) DEFAULT NULL,
-  `Mac` varchar(45) DEFAULT NULL,
+  `toKvmPool` int(11) DEFAULT NULL,
+  `Start` bigint(20) DEFAULT NULL,
+  `End` bigint(20) DEFAULT NULL,
   `Comment` varchar(255) DEFAULT NULL,
   `LastUpdate` datetime DEFAULT NULL,
   PRIMARY KEY (`i`),
-  KEY `LinkToKvmHost4_idx` (`toKvmHost`),
-  CONSTRAINT `LinkToKvmHost4` FOREIGN KEY (`toKvmHost`) REFERENCES `KvmHost` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='ip a';
+  KEY `LinkToKvmPool2_idx` (`toKvmPool`),
+  CONSTRAINT `LinkToKvmPool2` FOREIGN KEY (`toKvmPool`) REFERENCES `KvmPool` (`i`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='virsh pool-dumpxml POOLNAME\n';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `KvmNetworkInterface`
+-- Dumping data for table `KvmPoolExtent`
 --
 
-LOCK TABLES `KvmNetworkInterface` WRITE;
-/*!40000 ALTER TABLE `KvmNetworkInterface` DISABLE KEYS */;
-INSERT INTO `KvmNetworkInterface` VALUES (1,1,'enp4s0','144.XX.XX.107','144.XX.XX.97','255.255.255.224','144.XX.XX.127','30:5a:3a:75:da:41',NULL,'2021-11-26 09:32:47'),(2,1,'virbr0-nic','192.168.122.1',NULL,'255.255.255.0','192.168.122.255','52:54:00:5d:a0:cc',NULL,'2021-11-26 09:32:47');
-/*!40000 ALTER TABLE `KvmNetworkInterface` ENABLE KEYS */;
+LOCK TABLES `KvmPoolExtent` WRITE;
+/*!40000 ALTER TABLE `KvmPoolExtent` DISABLE KEYS */;
+INSERT INTO `KvmPoolExtent` VALUES (1,2,479962612736,480103964160,NULL,'2021-11-26 09:41:44'),(2,3,479962612736,480103964160,NULL,'2021-11-26 09:41:44'),(3,4,17408,1048576,NULL,'2021-11-26 09:41:44'),(4,4,478889902080,480103964160,NULL,'2021-11-26 09:41:44');
+/*!40000 ALTER TABLE `KvmPoolExtent` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -58,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-06  0:04:00
+-- Dump completed on 2021-12-12 23:05:18
